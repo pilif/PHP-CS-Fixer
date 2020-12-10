@@ -98,6 +98,9 @@ Rule sets
 
 The rule is part of the following rule sets:
 
+@PHP74Migration:risky
+  Using the `@PHP74Migration:risky <./../../ruleSets/PHP74MigrationRisky.rst>`_ rule set will enable the ``no_alias_functions`` rule with the default config.
+
 @PHP80Migration:risky
   Using the `@PHP80Migration:risky <./../../ruleSets/PHP80MigrationRisky.rst>`_ rule set will enable the ``no_alias_functions`` rule with the config below:
 

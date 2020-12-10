@@ -25,7 +25,6 @@ final class PhpCsFixerRiskySet extends AbstractRuleSetDescription
             '@Symfony:risky' => true,
             'comment_to_phpdoc' => true,
             'final_internal_class' => true,
-            'logical_operators' => true,
             'no_alias_functions' => [
                 'sets' => [
                     '@all',
@@ -33,13 +32,10 @@ final class PhpCsFixerRiskySet extends AbstractRuleSetDescription
             ],
             'no_unreachable_default_argument_value' => true,
             'no_unset_on_property' => true,
-            'php_unit_set_up_tear_down_visibility' => true,
             'php_unit_strict' => true,
-            'php_unit_test_annotation' => true,
             'php_unit_test_case_static_method_calls' => true,
             'strict_comparison' => true,
             'strict_param' => true,
-            'string_line_ending' => true,
         ];
     }
 

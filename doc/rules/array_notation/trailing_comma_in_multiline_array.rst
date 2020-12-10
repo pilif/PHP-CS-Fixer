@@ -58,6 +58,21 @@ Rule sets
 
 The rule is part of the following rule sets:
 
+@PHP73Migration
+  Using the `@PHP73Migration <./../../ruleSets/PHP73Migration.rst>`_ rule set will enable the ``trailing_comma_in_multiline_array`` rule with the config below:
+
+  ``['after_heredoc' => true]``
+
+@PHP74Migration
+  Using the `@PHP74Migration <./../../ruleSets/PHP74Migration.rst>`_ rule set will enable the ``trailing_comma_in_multiline_array`` rule with the config below:
+
+  ``['after_heredoc' => true]``
+
+@PHP80Migration
+  Using the `@PHP80Migration <./../../ruleSets/PHP80Migration.rst>`_ rule set will enable the ``trailing_comma_in_multiline_array`` rule with the config below:
+
+  ``['after_heredoc' => true]``
+
 @PhpCsFixer
   Using the `@PhpCsFixer <./../../ruleSets/PhpCsFixer.rst>`_ rule set will enable the ``trailing_comma_in_multiline_array`` rule with the default config.
 

@@ -31,9 +31,9 @@ if (trait_exists(ProphesizeOnlyInterfaceTrait::class)) {
         use ExpectationViaCodeOverAnnotationTrait;
         use ExpectOverSetExceptionTrait;
         use IdentityOverEqualityTrait;
+        use PolyfillTrait;
         use ProphecyOverMockObjectTrait;
         use ProphesizeOnlyInterfaceTrait;
-        use PolyfillTrait;
     }
 } else {
     /**

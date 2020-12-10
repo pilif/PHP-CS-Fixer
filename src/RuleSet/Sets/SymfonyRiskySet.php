@@ -21,7 +21,10 @@ final class SymfonyRiskySet extends AbstractRuleSetDescription
 {
     public function getRules()
     {
-        return [
+        $rules = [
+            '@PHP56Migration:risky' => true,
+            'array_push' => true,
+            'combine_nested_dirname' => true,
             'dir_constant' => true,
             'ereg_to_preg' => true,
             'error_suppression' => true,
@@ -41,15 +44,18 @@ final class SymfonyRiskySet extends AbstractRuleSetDescription
             ],
             'implode_call' => true,
             'is_null' => true,
+            'logical_operators' => true,
             'modernize_types_casting' => true,
             'native_constant_invocation' => [
                 'fix_built_in' => false,
                 'include' => [
                     'DIRECTORY_SEPARATOR',
+                    'PHP_INT_SIZE',
                     'PHP_SAPI',
                     'PHP_VERSION_ID',
                 ],
                 'scope' => 'namespaced',
+                'strict' => true,
             ],
             'native_function_invocation' => [
                 'include' => [
@@ -61,14 +67,29 @@ final class SymfonyRiskySet extends AbstractRuleSetDescription
             'no_alias_functions' => true,
             'no_homoglyph_names' => true,
             'no_php4_constructor' => true,
+            'no_trailing_whitespace_in_string' => true,
             'no_unneeded_final_method' => true,
+            'no_useless_sprintf' => true,
             'non_printable_character' => true,
             'php_unit_construct' => true,
             'php_unit_mock_short_will_return' => true,
-            'psr4' => true,
+            'php_unit_set_up_tear_down_visibility' => true,
+            'php_unit_test_annotation' => true,
+            'psr_autoloading' => true,
             'self_accessor' => true,
             'set_type_to_cast' => true,
+            'string_line_ending' => true,
+            'ternary_to_elvis_operator' => true,
         ];
+
+        $rules['non_printable_character'] = \PHP_VERSION_ID < 70000
+            ? true
+            : ['use_escape_sequences_in_strings' => true]
+        ;
+
+        ksort($rules);
+
+        return $rules;
     }
 
     public function getDescription()

@@ -136,7 +136,7 @@ final class ConfigTest extends TestCase
         $finder = new Finder();
         $finder->in(__DIR__.'/Fixtures/FinderDirectory');
 
-        $config = Config::create()->setFinder($finder);
+        $config = (new Config())->setFinder($finder);
 
         $items = iterator_to_array(
             $config->getFinder(),
@@ -152,7 +152,7 @@ final class ConfigTest extends TestCase
         $finder = new SymfonyFinder();
         $finder->in(__DIR__.'/Fixtures/FinderDirectory');
 
-        $config = Config::create()->setFinder($finder);
+        $config = (new Config())->setFinder($finder);
 
         $items = iterator_to_array(
             $config->getFinder(),
@@ -276,5 +276,23 @@ final class ConfigTest extends TestCase
             [$fixers, $fixers],
             [$fixers, new \ArrayIterator($fixers)],
         ];
+    }
+
+    public function testConfigConstructorWithName()
+    {
+        $anonymousConfig = new Config();
+        $namedConfig = new Config('foo');
+
+        static::assertSame($anonymousConfig->getName(), 'default');
+        static::assertSame($namedConfig->getName(), 'foo');
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation PhpCsFixer\Config::create is deprecated since 2.17 and will be removed in 3.0.
+     */
+    public function testDeprecatedConstructor()
+    {
+        Config::create();
     }
 }

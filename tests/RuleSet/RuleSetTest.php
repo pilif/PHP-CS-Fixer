@@ -234,8 +234,8 @@ final class RuleSetTest extends TestCase
             [
                 'blank_line_after_namespace' => true,
                 'braces' => true,
-                'class_definition' => true,
                 'constant_case' => true,
+                'class_definition' => true,
                 'elseif' => true,
                 'encoding' => true,
                 'function_declaration' => true,

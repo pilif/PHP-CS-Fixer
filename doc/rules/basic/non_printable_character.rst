@@ -65,13 +65,22 @@ The rule is part of the following rule sets:
 
   ``['use_escape_sequences_in_strings' => true]``
 
+@PHP74Migration:risky
+  Using the `@PHP74Migration:risky <./../../ruleSets/PHP74MigrationRisky.rst>`_ rule set will enable the ``non_printable_character`` rule with the config below:
+
+  ``['use_escape_sequences_in_strings' => true]``
+
 @PHP80Migration:risky
   Using the `@PHP80Migration:risky <./../../ruleSets/PHP80MigrationRisky.rst>`_ rule set will enable the ``non_printable_character`` rule with the config below:
 
   ``['use_escape_sequences_in_strings' => true]``
 
 @PhpCsFixer:risky
-  Using the `@PhpCsFixer:risky <./../../ruleSets/PhpCsFixerRisky.rst>`_ rule set will enable the ``non_printable_character`` rule with the default config.
+  Using the `@PhpCsFixer:risky <./../../ruleSets/PhpCsFixerRisky.rst>`_ rule set will enable the ``non_printable_character`` rule with the config below:
+
+  ``['use_escape_sequences_in_strings' => true]``
 
 @Symfony:risky
-  Using the `@Symfony:risky <./../../ruleSets/SymfonyRisky.rst>`_ rule set will enable the ``non_printable_character`` rule with the default config.
+  Using the `@Symfony:risky <./../../ruleSets/SymfonyRisky.rst>`_ rule set will enable the ``non_printable_character`` rule with the config below:
+
+  ``['use_escape_sequences_in_strings' => true]``

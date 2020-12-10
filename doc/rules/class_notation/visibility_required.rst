@@ -77,6 +77,11 @@ The rule is part of the following rule sets:
 
   ``['elements' => ['const', 'method', 'property']]``
 
+@PHP74Migration
+  Using the `@PHP74Migration <./../../ruleSets/PHP74Migration.rst>`_ rule set will enable the ``visibility_required`` rule with the config below:
+
+  ``['elements' => ['const', 'method', 'property']]``
+
 @PHP80Migration
   Using the `@PHP80Migration <./../../ruleSets/PHP80Migration.rst>`_ rule set will enable the ``visibility_required`` rule with the config below:
 

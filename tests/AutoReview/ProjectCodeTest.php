@@ -647,6 +647,10 @@ final class ProjectCodeTest extends TestCase
                 continue;
             }
 
+            if ($fixer instanceof \PhpCsFixer\AbstractProxyFixer) {
+                continue;
+            }
+
             yield [\get_class($fixer)];
         }
     }

@@ -63,6 +63,7 @@ abstract class AbstractFixerTestCase extends TestCase
     // do not modify this structure without prior discussion
     private $allowedFixersWithoutDefaultCodeSample = [
         'general_phpdoc_annotation_remove' => true,
+        'general_phpdoc_tag_rename' => true,
     ];
 
     protected function setUp()
@@ -211,14 +212,6 @@ abstract class AbstractFixerTestCase extends TestCase
             $options = $this->fixer->getConfigurationDefinition()->getOptions();
 
             foreach ($options as $option) {
-                // @TODO 2.17 adjust fixers to use new casing and deprecate old one
-                if (\in_array($fixerName, [
-                    'final_internal_class',
-                    'ordered_class_elements',
-                ], true)) {
-                    static::markTestIncomplete(sprintf('Rule "%s" is not following new option casing yet, please help.', $fixerName));
-                }
-
                 static::assertMatchesRegularExpression('/^[a-z_]+[a-z]$/', $option->getName(), sprintf('[%s] Option %s is not snake_case.', $fixerName, $option->getName()));
             }
         }

@@ -86,6 +86,11 @@ The rule is part of the following rule sets:
 
   ``['replacements' => ['mt_rand' => 'random_int', 'rand' => 'random_int']]``
 
+@PHP74Migration:risky
+  Using the `@PHP74Migration:risky <./../../ruleSets/PHP74MigrationRisky.rst>`_ rule set will enable the ``random_api_migration`` rule with the config below:
+
+  ``['replacements' => ['mt_rand' => 'random_int', 'rand' => 'random_int']]``
+
 @PHP80Migration:risky
   Using the `@PHP80Migration:risky <./../../ruleSets/PHP80MigrationRisky.rst>`_ rule set will enable the ``random_api_migration`` rule with the config below:
 

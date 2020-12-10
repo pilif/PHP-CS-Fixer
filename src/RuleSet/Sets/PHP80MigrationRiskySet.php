@@ -30,7 +30,7 @@ final class PHP80MigrationRiskySet extends AbstractRuleSetDescription
                 ],
             ],
             'no_php4_constructor' => true,
-            'no_unneeded_final_method' => true,
+            'no_unneeded_final_method' => true, // final private method (not constructor) are no longer allowed >= PHP8.0
             'no_unreachable_default_argument_value' => true,
         ];
     }
