@@ -14,7 +14,6 @@ namespace PhpCsFixer\Tests\RuleSet;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\PhpUnit\PhpUnitTargetVersion;
-use PhpCsFixer\FixerConfiguration\DeprecatedFixerOption;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet\RuleSet;
 use PhpCsFixer\RuleSet\RuleSets;
@@ -45,7 +44,17 @@ final class RuleSetsTest extends TestCase
             static::assertIsString($name);
             static::assertTrue('@' === $name[0]);
             static::assertIsArray($set->getRules());
+            static::assertSame($set, RuleSets::getSetDefinition($name));
         }
+    }
+
+    public function testGetUnknownSetDefinition()
+    {
+        $name = 'Unknown';
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches(sprintf('#^Set "%s" does not exist\.$#', $name));
+
+        RuleSets::getSetDefinition($name);
     }
 
     /**
@@ -197,7 +206,7 @@ Integration of %s.
         }
 
         if (!isset($allowedVersionsForFixer)) {
-            static::markTestSkipped(sprintf('The fixer "%s" does not have option "target".', $fixer->getName()));
+            throw new \Exception(sprintf('The fixer "%s" does not have option "target".', $fixer->getName()));
         }
 
         $allowedVersionsForRuleset = array_filter(
@@ -274,10 +283,6 @@ Integration of %s.
         $fixer = self::getFixerByName($ruleName);
 
         foreach ($fixer->getConfigurationDefinition()->getOptions() as $option) {
-            if ($option instanceof DeprecatedFixerOption) {
-                continue;
-            }
-
             if ('target' === $option->getName()) {
                 $targetVersion = $option->getDefault();
 
@@ -286,7 +291,7 @@ Integration of %s.
         }
 
         if (null === $targetVersion) {
-            static::markTestSkipped(sprintf('The fixer "%s" does not have option "target".', $fixer->getName()));
+            throw new \Exception(sprintf('The fixer "%s" does not have option "target".', $fixer->getName()));
         }
 
         return $targetVersion;

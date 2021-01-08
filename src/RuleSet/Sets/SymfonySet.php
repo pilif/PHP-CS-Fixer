@@ -126,7 +126,6 @@ final class SymfonySet extends AbstractRuleSetDescription
             'normalize_index_brace' => true,
             'object_operator_without_whitespace' => true,
             'ordered_imports' => true,
-            'ordered_traits' => true,
             'php_unit_fqcn_annotation' => true,
             'php_unit_method_casing' => true,
             'phpdoc_align' => [
@@ -199,6 +198,6 @@ final class SymfonySet extends AbstractRuleSetDescription
 
     public function getDescription()
     {
-        return 'Rules that follow the official `Symfony Coding Standards <https://symfony.com/doc/current/contributing/code/standards.html>`_';
+        return 'Rules that follow the official `Symfony Coding Standards <https://symfony.com/doc/current/contributing/code/standards.html>`_.';
     }
 }

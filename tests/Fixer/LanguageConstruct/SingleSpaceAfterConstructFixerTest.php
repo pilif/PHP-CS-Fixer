@@ -78,8 +78,8 @@ final class SingleSpaceAfterConstructFixerTest extends AbstractFixerTestCase
     {
         return [
             [
-                '<?php abstract class Foo {};',
-                '<?php abstract  class Foo {};',
+                '<?php abstract class Foo {}; if($a){}',
+                '<?php abstract  class Foo {}; if($a){}',
             ],
             [
                 '<?php abstract class Foo {};',
@@ -920,6 +920,49 @@ $foo;',
                 '<?php class Foo extends /* foo */\InvalidArgumentException {}',
                 '<?php class Foo extends  /* foo */\InvalidArgumentException {}',
             ],
+            [
+                '<?php interface Foo extends Bar1 {}',
+                '<?php interface Foo extends  Bar1 {}',
+            ],
+            [
+                '<?php interface Foo extends Bar2 {}',
+                '<?php interface Foo extends
+
+Bar2 {}',
+            ],
+            [
+                '<?php interface Foo extends /* foo */Bar3 {}',
+                '<?php interface Foo extends/* foo */Bar3 {}',
+            ],
+            [
+                '<?php interface Foo extends /* foo */Bar4 {}',
+                '<?php interface Foo extends  /* foo */Bar4 {}',
+            ],
+            [
+                '<?php interface Foo extends Bar5, Baz, Qux {}',
+                '<?php interface Foo extends  Bar5, Baz, Qux {}',
+            ],
+            [
+                '<?php interface Foo extends Bar6, Baz, Qux {}',
+                '<?php interface Foo extends
+
+Bar6, Baz, Qux {}',
+            ],
+            [
+                '<?php interface Foo extends /* foo */Bar7, Baz, Qux {}',
+                '<?php interface Foo extends/* foo */Bar7, Baz, Qux {}',
+            ],
+            [
+                '<?php interface Foo extends /* foo */Bar8, Baz, Qux {}',
+                '<?php interface Foo extends  /* foo */Bar8, Baz, Qux {}',
+            ],
+            [
+                '<?php interface Foo extends
+    Bar9,
+    Baz,
+    Qux
+{}',
+            ],
         ];
     }
 
@@ -1500,6 +1543,13 @@ foo; foo: echo "Bar";',
             [
                 '<?php class Foo implements /* foo */\Countable {}',
                 '<?php class Foo implements  /* foo */\Countable {}',
+            ],
+            [
+                '<?php class Foo implements
+                    \Countable,
+                    Bar,
+                    Baz
+                {}',
             ],
         ];
     }
@@ -3085,6 +3135,46 @@ baz(); }',
     }
 
     /**
+     * @dataProvider provideCommentsCases
+     *
+     * @param string $expected
+     * @param string $input
+     */
+    public function testComments($expected, $input)
+    {
+        $this->fixer->configure([
+            'constructs' => [
+                'comment',
+                'php_doc',
+            ],
+        ]);
+
+        $this->doTest($expected, $input);
+    }
+
+    public function provideCommentsCases()
+    {
+        yield [
+            '<?php
+$a /* 1 */ = /**/ 1;
+$a /** 1 */ = /** 2 */ 1;
+
+$a = 3; # 3
+$a = 4; /** 4 */
+echo 1;
+',
+            '<?php
+$a /* 1 */= /**/1;
+$a /** 1 */= /** 2 */1;
+
+$a = 3; # 3
+$a = 4; /** 4 */
+echo 1;
+',
+        ];
+    }
+
+    /**
      * @param string $input
      * @param string $expected
      *
@@ -3098,7 +3188,7 @@ baz(); }',
 
     public function provideFix80Cases()
     {
-        yield [
+        yield 'match 1' => [
             '<?php echo match ($x) {
     1, 2 => "Same for 1 and 2",
 };',
@@ -3107,7 +3197,7 @@ baz(); }',
 };',
         ];
 
-        yield [
+        yield 'match 2' => [
             '<?php echo match ($x) {
     1, 2 => "Same for 1 and 2",
 };',
@@ -3116,7 +3206,7 @@ baz(); }',
 };',
         ];
 
-        yield [
+        yield 'constructor property promotion' => [
             '<?php
 class Point {
     public function __construct(
@@ -3137,18 +3227,24 @@ class Point {
 ",
         ];
 
-        yield [
+        yield 'attribute' => [
             '<?php class Foo {
     #[Required] // foo
-    public $bar;
+    public $bar1;
+
+    #[Required]
+    public $bar2;
 }',
             '<?php class Foo {
     #[Required]// foo
-    public $bar;
+    public $bar1;
+
+    #[Required]
+    public $bar2;
 }',
         ];
 
-        yield [
+        yield 'named argument' => [
             '<?php $foo(test: 1);',
             '<?php $foo(test:    1);',
         ];

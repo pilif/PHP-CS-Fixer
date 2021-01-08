@@ -1,5 +1,6 @@
 {
     "symbol-whitelist" : [
+        "LegacyPHPUnit\\TestCase",
         "PhpCsFixer\\PhpunitConstraintIsIdenticalString\\Constraint\\IsIdenticalString",
         "PhpCsFixer\\Tests\\Test\\Constraint\\SameStringsConstraint",
         "PhpCsFixer\\Tests\\Test\\IsIdenticalConstraint",
@@ -13,6 +14,7 @@
         "PHPUnitGoodPractices\\Traits\\ProphecyOverMockObjectTrait",
         "PHPUnitGoodPractices\\Traits\\ProphesizeOnlyInterfaceTrait",
         "Prophecy\\Argument",
+        "Prophecy\\PhpUnit\\ProphecyTrait",
         "Symfony\\Component\\EventDispatcher\\Event",
         "Symfony\\Contracts\\EventDispatcher\\Event",
         "Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface",

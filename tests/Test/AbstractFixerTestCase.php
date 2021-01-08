@@ -66,9 +66,9 @@ abstract class AbstractFixerTestCase extends TestCase
         'general_phpdoc_tag_rename' => true,
     ];
 
-    protected function setUp()
+    protected function doSetUp()
     {
-        parent::setUp();
+        parent::doSetUp();
 
         $this->linter = $this->getLinter();
         $this->fixer = $this->createFixer();
@@ -79,9 +79,9 @@ abstract class AbstractFixerTestCase extends TestCase
         }
     }
 
-    protected function tearDown()
+    protected function doTearDown()
     {
-        parent::tearDown();
+        parent::doTearDown();
 
         $this->linter = null;
         $this->fixer = null;
@@ -196,7 +196,6 @@ abstract class AbstractFixerTestCase extends TestCase
             // It may only shrink, never add anything to it.
             $fixerNamesWithKnownMissingSamplesWithConfig = [ // @TODO 3.0 - remove this
                 'is_null', // has only one option which is deprecated
-                'php_unit_dedicate_assert_internal_type',
             ];
 
             if (\count($configSamplesProvided) < 2) {

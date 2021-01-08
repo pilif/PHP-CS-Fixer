@@ -14,6 +14,7 @@ namespace PhpCsFixer\Tests\Smoke;
 
 use Keradus\CliExecutor\CommandExecutor;
 use Keradus\CliExecutor\ScriptExecutor;
+use PhpCsFixer\Console\Application;
 
 /**
  * @author Dariusz Rumiński <dariusz.ruminski@gmail.com>
@@ -29,9 +30,9 @@ final class CiIntegrationTest extends AbstractSmokeTest
 {
     public static $fixtureDir;
 
-    public static function setUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
-        parent::setUpBeforeClass();
+        parent::doSetUpBeforeClass();
 
         self::$fixtureDir = __DIR__.'/../Fixtures/ci-integration';
 
@@ -61,16 +62,16 @@ final class CiIntegrationTest extends AbstractSmokeTest
         }
     }
 
-    public static function tearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
-        parent::tearDownAfterClass();
+        parent::doTearDownAfterClass();
 
         self::executeCommand('rm -rf .git');
     }
 
-    protected function tearDown()
+    protected function doTearDown()
     {
-        parent::tearDown();
+        parent::doTearDown();
 
         self::executeScript([
             'git reset . -q',
@@ -148,11 +149,12 @@ If you need help while solving warnings, ask at https://gitter.im/PHP-CS-Fixer, 
 ';
 
         $pattern = sprintf(
-            '/^(?:%s)?(?:%s)?%s\n(?:%s)([\.S]{%d})\n%s$/',
+            '/^(?:%s)?(?:%s)?%s\n%s\n%s\n([\.S]{%d})\n%s$/',
             preg_quote($optionalIncompatibilityWarning, '/'),
             preg_quote($optionalXdebugWarning, '/'),
+            'PHP CS Fixer '.preg_quote(Application::VERSION, '/').' '.preg_quote(Application::VERSION_CODENAME, '/').' by Fabien Potencier and Dariusz Ruminski',
+            preg_quote(sprintf('Runtime: PHP %s', PHP_VERSION), '/'),
             preg_quote('Loaded config default from ".php_cs.dist".', '/'),
-            preg_quote(sprintf("Runtime: PHP %s\n", PHP_VERSION), '/'),
             \strlen($expectedResult3Files),
             preg_quote('Legend: ?-unknown, I-invalid file syntax (file ignored), S-skipped (cached or empty file), .-no changes, F-fixed, E-error', '/')
         );

@@ -43,6 +43,7 @@ final class SingleSpaceAfterConstructFixer extends AbstractFixer implements Conf
         'catch' => T_CATCH,
         'class' => T_CLASS,
         'clone' => T_CLONE,
+        'comment' => T_COMMENT,
         'const' => T_CONST,
         'const_import' => CT::T_CONST_IMPORT,
         'continue' => T_CONTINUE,
@@ -70,6 +71,7 @@ final class SingleSpaceAfterConstructFixer extends AbstractFixer implements Conf
         'named_argument' => CT::T_NAMED_ARGUMENT_COLON,
         'new' => T_NEW,
         'open_tag_with_echo' => T_OPEN_TAG_WITH_ECHO,
+        'php_doc' => T_DOC_COMMENT,
         'php_open' => T_OPEN_TAG,
         'print' => T_PRINT,
         'private' => T_PRIVATE,
@@ -218,14 +220,24 @@ yield  from  baz();
                 continue;
             }
 
+            if ($token->isGivenKind([T_EXTENDS, T_IMPLEMENTS]) && $this->isMultilineExtendsOrImplementsWithMoreThanOneAncestor($tokens, $index)) {
+                continue;
+            }
+
             if ($token->isGivenKind(T_RETURN) && $this->isMultiLineReturn($tokens, $index)) {
                 continue;
             }
 
-            if (!$tokens[$whitespaceTokenIndex]->equals([T_WHITESPACE])) {
-                $tokens->insertAt($whitespaceTokenIndex, new Token([T_WHITESPACE, ' ']));
-            } elseif (' ' !== $tokens[$whitespaceTokenIndex]->getContent()) {
+            if ($token->isComment() || $token->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+                if ($tokens[$whitespaceTokenIndex]->equals([T_WHITESPACE]) && false !== strpos($tokens[$whitespaceTokenIndex]->getContent(), "\n")) {
+                    continue;
+                }
+            }
+
+            if ($tokens[$whitespaceTokenIndex]->equals([T_WHITESPACE])) {
                 $tokens[$whitespaceTokenIndex] = new Token([T_WHITESPACE, ' ']);
+            } else {
+                $tokens->insertAt($whitespaceTokenIndex, new Token([T_WHITESPACE, ' ']));
             }
 
             if (
@@ -283,6 +295,36 @@ yield  from  baz();
                 --$nestedCount;
             } elseif (0 === $nestedCount && $tokens[$index]->equalsAny([';', [T_CLOSE_TAG]])) {
                 break;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return bool
+     */
+    private function isMultilineExtendsOrImplementsWithMoreThanOneAncestor(Tokens $tokens, $index)
+    {
+        $hasMoreThanOneAncestor = false;
+
+        while (++$index) {
+            $token = $tokens[$index];
+
+            if ($token->equals(',')) {
+                $hasMoreThanOneAncestor = true;
+
+                continue;
+            }
+
+            if ($token->equals('{')) {
+                return false;
+            }
+
+            if ($hasMoreThanOneAncestor && false !== strpos($token->getContent(), "\n")) {
+                return true;
             }
         }
 

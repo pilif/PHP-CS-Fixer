@@ -71,6 +71,7 @@ final class SymfonyRiskySet extends AbstractRuleSetDescription
             'no_unneeded_final_method' => true,
             'no_useless_sprintf' => true,
             'non_printable_character' => true,
+            'ordered_traits' => true,
             'php_unit_construct' => true,
             'php_unit_mock_short_will_return' => true,
             'php_unit_set_up_tear_down_visibility' => true,
@@ -94,6 +95,6 @@ final class SymfonyRiskySet extends AbstractRuleSetDescription
 
     public function getDescription()
     {
-        return 'Rules that follow the official `Symfony Coding Standards <https://symfony.com/doc/current/contributing/code/standards.html>`_';
+        return 'Rules that follow the official `Symfony Coding Standards <https://symfony.com/doc/current/contributing/code/standards.html>`_.';
     }
 }
